@@ -4,6 +4,7 @@
     <SelectQuiz :baseUrlAPI="baseUrlAPI" />
     <TheQuiz v-if="canTakeTest" :baseUrlAPI="baseUrlAPI" />
   </div>
+  <button @click="allowTakeTest()">Allow? {{ canTakeTest }}</button>
 </template>
 
 <script lang="ts">
@@ -22,6 +23,11 @@ export default defineComponent({
   components: {
     SelectQuiz,
     TheQuiz
+  },
+  methods: {
+    allowTakeTest() {
+      this.canTakeTest = true
+    }
   }
 })
 </script>

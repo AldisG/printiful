@@ -16,11 +16,7 @@
 
 <script lang="ts">
 import axios from 'axios'
-
-type ApiQuizCategories = {
-  id: number,
-  title: string
-}
+import { QuestionsAndAnswers } from '@/Types'
 
 export default ({
   name: 'SelectQuiz',
@@ -31,8 +27,9 @@ export default ({
     return {
       userName: '',
       quizTopic: '',
-      apiQuizCategories: [] as ApiQuizCategories[],
-      errorMessage: ''
+      apiQuizCategories: [] as QuestionsAndAnswers[],
+      errorMessage: '',
+      selectedQuestionID: 0
     }
   },
   methods: {
@@ -45,8 +42,11 @@ export default ({
         return
       } else {
         this.errorMessage = ''
-        console.log('Emmit this up', this.userName, this.quizTopic)
       }
+      this.selectedQuestionID = this.apiQuizCategories.find((question) => {
+        return question.title === this.quizTopic
+      }).id
+      // console.log('Emmit this up' selectedQuestionID)
     }
   },
   mounted() {
