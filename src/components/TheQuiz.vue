@@ -1,14 +1,25 @@
 <template>
-
-  <div class="question-container">
-    <h2 class="question">{{ questions[currentQuestionIndex]?.title }}</h2>
-    <small class="question">{{ questions[currentQuestionIndex]?.id }}</small>
+  <div class="quiz-container" v-if="answers.length > 1">
+    <div class="question-container">
+      <h2 class="question">{{ questions[currentQuestionIndex]?.title }}</h2>
+      <small class="question">{{ questions[currentQuestionIndex]?.id }}</small>
+    </div>
+    <div class="answer-container">
+      <div v-for="{id, title} in answers" :key="id" class="answer-element">{{ title }}</div>
+    </div>
+    <span>{{ currentQuestionIndex + 1 }}/{{ questions.length }}</span>
+    <button
+      v-if="!(currentQuestionIndex >= questions.length)"
+      class="button-next-and-submit" @click="addToCurrentQuestionIndex">
+      Next
+    </button>
+    <button
+      v-if="currentQuestionIndex + 1 === questions.length"
+      class="button-next-and-submit" @click="finishQuiz">
+      Finish
+    </button>
+    <p>141 ir tema, 3913 ir jautajums, kas ir cits katras temas jaut</p>
   </div>
-  <div class="answer-container">
-    <div v-for="{id, title} in answers" :key="id" class="answer-element">{{ title }}</div>
-  </div>
-  <button class="button-next-and-submit" @click="addToCurrentQuestionIndex">Next</button>
-  <p>141 ir tema, 3913 ir jautajums, kas ir cits katras temas jaut</p>
 </template>
 
 <script lang="ts">
@@ -24,7 +35,8 @@ export default {
     return {
       questions: [] as QuestionsAndAnswers[],
       answers: [] as QuestionsAndAnswers[],
-      currentQuestionIndex: 0
+      currentQuestionIndex: 0,
+      userPoints: 0
     }
   },
   async mounted() {
@@ -42,11 +54,13 @@ export default {
         this.answers = data
       })
       .catch((err) => console.log('Error catching answers', err))
-    console.log(this.answers[0])
   },
   methods: {
     addToCurrentQuestionIndex() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
+      if (this.currentQuestionIndex <= this.questions.length) {
+        console.log(this.currentQuestionIndex, 'Can COUNT USER points IF CORRECT')
+      }
+      if (this.currentQuestionIndex < this.questions.length) {
         if (this.answers.length > 1) {
           this.currentQuestionIndex++
           axios
@@ -55,9 +69,11 @@ export default {
               this.answers = data
             })
             .catch((err) => console.log('Error catching answers', err))
-          console.log(this.answers[0])
         }
       }
+    },
+    finishQuiz() {
+      console.log('Quiz finished, show modal or page content')
     }
   },
   updated() {

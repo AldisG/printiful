@@ -3,6 +3,7 @@
     This is home
     <SelectQuiz :baseUrlAPI="baseUrlAPI" />
     <TheQuiz v-if="canTakeTest" :baseUrlAPI="baseUrlAPI" />
+    <QuizComplete v-if="canTakeTest" />
   </div>
   <button @click="allowTakeTest()">Allow? {{ canTakeTest }}</button>
 </template>
@@ -11,6 +12,7 @@
 import {defineComponent} from 'vue'
 import SelectQuiz from '@/components/SelectQuiz.vue'
 import TheQuiz from '@/components/TheQuiz.vue'
+import QuizComplete from "@/components/QuizComplete.vue";
 
 export default defineComponent({
   name: 'Home',
@@ -22,7 +24,8 @@ export default defineComponent({
   },
   components: {
     SelectQuiz,
-    TheQuiz
+    TheQuiz,
+    QuizComplete
   },
   methods: {
     allowTakeTest() {
