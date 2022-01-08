@@ -2,27 +2,34 @@
   <div class="wrapper">
     <h2 class="quiz-complete">Quiz completed!</h2>
     <h4 class="user">Thanks "" NAME ""!</h4>
-    <span class="user-final-score">{{ score }} out of {{ maxScore }}.</span>
+    <span v-if="score" class="user-final-score">{{ score.correct }} / {{score.total}}.</span>
   </div>
 </template>
 
 <script lang="ts">
+import axios from "axios";
+import { AnswerResults } from "@/Types";
+
 export default ({
   name: "QuizComplete",
-  props: {},
+  props: {
+    baseUrlAPI: String
+  },
   data() {
     return {
-      score: 0,
-      maxScore: 10
+      score: {
+        correct: 0,
+        total: 0
+      } as AnswerResults,
+      dummySelectedQuestionID: "141",
+      answersIdStringCollection: '&answers[]=14030'
     }
   },
-  methods: {
-    setUserScore() {
-      console.log('Winer')
-    }
-  },
+  methods: {},
   mounted() {
-    this.setUserScore()
+    axios
+      .get(this.baseUrlAPI + 'submit&quizId=' + this.dummySelectedQuestionID + this.answersIdStringCollection)
+      .then(({data}) => this.score = data)
   }
 })
 </script>

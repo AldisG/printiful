@@ -29,7 +29,7 @@ export default ({
       quizTopic: '',
       apiQuizCategories: [] as QuestionsAndAnswers[],
       errorMessage: '',
-      selectedQuestionID: 0
+      selectedQuestionID: 0 //emmit this
     }
   },
   methods: {
