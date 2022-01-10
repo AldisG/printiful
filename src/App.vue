@@ -1,10 +1,14 @@
 <template>
-  <router-view />
+  <Home />
 </template>
 
 <script>
-
-export default ({})
+import Home from '@/views/Home'
+export default {
+  components: {
+    Home
+  }
+}
 </script>
 
 <style lang="scss">

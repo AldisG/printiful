@@ -13,7 +13,7 @@
             maxlength="20">
         </label>
         <div>
-          <label for="selected">Select a topic
+          <label>Select a topic
             <select class="select-category" id="selected" v-model="quizTopic">
               <option
                 v-for="category in apiQuizCategories"

@@ -13,6 +13,7 @@ import {defineComponent} from 'vue'
 import {UserChoice} from '@/Types.ts'
 import SelectQuiz from '@/components/SelectQuiz.vue'
 import TheQuiz from '@/components/TheQuiz.vue'
+import axios from 'axios'
 
 export default defineComponent({
   name: 'Home',
