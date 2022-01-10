@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
@@ -9,16 +9,18 @@ export default ({})
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;500;700&display=swap');
+
 $dark: #2c3e50;
 $darkTransparent: #2c3e5050;
 $white: #fff;
 
-*, *::before, *::after{
+*, *::before, *::after {
   box-sizing: border-box;
   color: $dark;
   padding: 0;
   margin: 0;
 }
+
 input,
 select,
 button {
@@ -28,24 +30,29 @@ button {
   outline: 1px solid $darkTransparent;
   border: none;
   border-radius: 4px;
-  &:hover{
+
+  &:hover {
     outline: 1px solid $dark;
   }
+
   &:active, &:focus {
     outline: 2px solid $dark;
   }
 }
+
 button {
   cursor: pointer;
   font-size: 18px;
   user-select: none;
 }
-label{
+
+label {
   display: flex;
   flex-direction: column;
   align-items: self-start;
 }
-body{
+
+body {
   background-color: #2c3e50;
   font-weight: 300;
 }

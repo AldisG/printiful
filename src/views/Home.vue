@@ -1,10 +1,11 @@
 <template>
-  <div class="home" >
+  <div class="home">
     <SelectQuiz v-if="!canTakeTest" @emmitUserChoiceUp="emitUserChoice" :baseUrlAPI="baseUrlAPI" />
-    <TheQuiz v-if="canTakeTest" :baseUrlAPI="baseUrlAPI" :userChoice="userChoice" @reactivateQuizUpToHome="quizCompleteReset"/>
+    <TheQuiz v-if="canTakeTest" :baseUrlAPI="baseUrlAPI" :userChoice="userChoice"
+             @reactivateQuizUpToHome="quizCompleteReset" />
   </div>
 
-  {{canTakeTest}}
+  {{ canTakeTest }}
 </template>
 
 <script lang="ts">
@@ -45,7 +46,7 @@ export default defineComponent({
 $white: #fff;
 
 .home {
-  min-height: 450px;
+  min-height: 350px;
   height: max-content;
   box-sizing: border-box;
   background-color: $white;

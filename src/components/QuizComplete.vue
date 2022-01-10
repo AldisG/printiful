@@ -42,7 +42,7 @@ export default ({
     await axios
       .get(this.baseUrlAPI + 'submit&quizId=' + this.selectedQuestionID + this.userAnswerListIntoString)
       .then(({data}) => this.score = data)
-      .catch((err) => console.log('Error fetching answers',err))
+      .catch((err) => console.log('Error fetching answers', err))
   },
 })
 </script>

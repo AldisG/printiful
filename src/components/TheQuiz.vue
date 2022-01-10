@@ -1,6 +1,9 @@
 <template>
-  <LoadingComponent class="loading-container" v-if="!answers.length" elementsClass=""
-                    elementsText="Loading questions..." />
+  <LoadingComponent
+    class="loading-container"
+    v-if="!answers.length"
+    elementsClass=""
+    elementsText="Loading questions..." />
 
   <div v-if="!quizComplete">
     <div v-if="answers.length" class="quiz-container">
@@ -48,7 +51,7 @@ export default {
     baseUrlAPI: String,
     userChoice: {} as UserChoice,
   },
-
+  emits: ["reactivateQuizUp", "reactivateQuizUpToHome"],
   components: {
     QuizComplete,
     LoadingComponent
@@ -56,8 +59,8 @@ export default {
   },
   computed: {
     calcProgress() {
-        return ((this.currentQuestionIndex / this.questions.length) * 100).toFixed()
-      }
+      return ((this.currentQuestionIndex / this.questions.length) * 100).toFixed()
+    }
   },
   data() {
     return {
@@ -134,6 +137,7 @@ $dark: #2c3e50;
   align-items: center;
   gap: 30px;
 }
+
 .answer-container {
   gap: 10px;
   display: grid;

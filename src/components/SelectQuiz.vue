@@ -5,7 +5,12 @@
       <div class="form-elements">
         <label for="select-username">
           Username
-          <input id="select-username" class="username" v-model="userName" type="text" maxlength="20">
+          <input
+            id="select-username"
+            class="username"
+            v-model="userName"
+            type="text"
+            maxlength="20">
         </label>
         <div>
           <label for="selected">Select a topic
@@ -21,7 +26,7 @@
         </div>
       </div>
       <span class="form-error" v-if="errorMessage">{{ errorMessage }}</span>
-      <button class="submit-button" @click="this.userSelectedNameAndTopic">Confirm</button>
+      <button class="submit-button" @click="this.userSelectedNameAndTopic">Start</button>
     </form>
   </div>
 </template>
@@ -35,7 +40,8 @@ export default ({
   props: {
     baseUrlAPI: String,
   },
-  emits: ["emmitUserChoiceUp"],
+  emits: ["reactivateQuizUp", "reactivateQuizUpToHome"],
+
   mounted() {
     axios.get(this.baseUrlAPI + 'quizzes')
       .then(({data}) => this.apiQuizCategories = data)

@@ -1,7 +1,7 @@
 <template>
   <div class="loading-message">
-    <img class="loading-icon" src='../assets/loading.svg' alt="loading"/>
-    <span>{{elementsText}}</span>
+    <img class="loading-icon" src='../assets/loading.svg' alt="loading" />
+    <span>{{ elementsText }}</span>
   </div>
 </template>
 
@@ -16,14 +16,14 @@ export default ({
 
 <style scoped>
 
-.loading-message{
+.loading-message {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.loading-icon{
+.loading-icon {
   box-sizing: content-box;
   width: 30px;
   padding: 10px;
@@ -36,10 +36,10 @@ export default ({
 
 @keyframes spin {
   from {
-    transform:rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform:rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
