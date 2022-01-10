@@ -1,4 +1,4 @@
-# printifyquiz
+# printifulquiz
 ```
 Printiful homework.
 This is a Quiz app, that uses API data from
