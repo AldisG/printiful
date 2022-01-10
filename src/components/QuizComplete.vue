@@ -2,9 +2,9 @@
   <div class="quiz-complete-container">
     <h2 class="quiz-complete">Quiz completed!</h2>
     <h4 class="user-congrats">Thanks, {{ userNameUpperCase }}!</h4>
-    <span v-if="!score.total" class="user-final-score">
-      Thinking!
-    </span>
+
+    <LoadingComponent v-if="!score.total" elementsClass="user-final-score" elementsText="Calculating results!" />
+
     <span v-if="score.total" class="user-final-score">
       Your score is <b>{{ score.correct }} / {{ score.total }}</b>!
     </span>
@@ -13,12 +13,16 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
-import {AnswerResults} from "@/Types";
+import axios from "axios"
+import {AnswerResults} from "@/Types"
 import {UserChoice} from '@/Types.ts'
+import LoadingComponent from '@/components/LoadingComponent.vue'
 
 export default ({
   name: "QuizComplete",
+  components: {
+    LoadingComponent
+  },
   props: {
     baseUrlAPI: String,
     userAnswerListIntoString: String,
@@ -38,6 +42,7 @@ export default ({
     await axios
       .get(this.baseUrlAPI + 'submit&quizId=' + this.selectedQuestionID + this.userAnswerListIntoString)
       .then(({data}) => this.score = data)
+      .catch((err) => console.log('Error fetching answers',err))
   },
 })
 </script>

@@ -63,7 +63,6 @@ export default ({
       const chosenQuizTopic = this.apiQuizCategories.find((question) => {
         return question.title === this.quizTopic
       }).id
-      console.log('Add')
       this.$emit('emmitUserChoiceUp', {
         selectedUserName: this.userName,
         selectedID: chosenQuizTopic
@@ -83,9 +82,6 @@ $red: #d32f2f;
   flex-direction: column;
   width: 100%;
   align-items: center;
-}
-
-.form-container {
 }
 
 .form-container, .form {

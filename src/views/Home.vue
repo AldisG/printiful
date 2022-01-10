@@ -3,6 +3,7 @@
     <SelectQuiz v-if="!canTakeTest" @emmitUserChoiceUp="emitUserChoice" :baseUrlAPI="baseUrlAPI" />
     <TheQuiz v-if="canTakeTest" :baseUrlAPI="baseUrlAPI" :userChoice="userChoice" @reactivateQuizUpToHome="quizCompleteReset"/>
   </div>
+
   {{canTakeTest}}
 </template>
 
@@ -22,7 +23,6 @@ export default defineComponent({
     }
   },
   emits: ["emmitUserChoiceUp2"],
-  // @reactivateQuizUp="quizCompleteReset"
   components: {
     SelectQuiz,
     TheQuiz,
@@ -34,12 +34,23 @@ export default defineComponent({
     emitUserChoice(userData: UserChoice) {
       this.userChoice = userData
       this.allowTakeTest()
-      // this.canTakeTest = false
     },
     quizCompleteReset() {
-      // console.log('lllll')
       this.canTakeTest = false
     },
   }
 })
 </script>
+<style lang="scss">
+$white: #fff;
+
+.home {
+  min-height: 450px;
+  height: max-content;
+  box-sizing: border-box;
+  background-color: $white;
+  width: 700px;
+  padding: 60px 40px;
+  border-radius: 14px;
+}
+</style>

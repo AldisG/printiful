@@ -1,33 +1,38 @@
 <template>
-  <h1 v-if="!answers.length">Loading...</h1>
+  <LoadingComponent class="loading-container" v-if="!answers.length" elementsClass=""
+                    elementsText="Loading questions..." />
 
-  <div v-if="!quizComplete" >
+  <div v-if="!quizComplete">
     <div v-if="answers.length" class="quiz-container">
       <div class="question-container">
         <h2 class="question">{{ questions[currentQuestionIndex]?.title }}</h2>
       </div>
 
-        <span v-if="loadingNewAnswerList">Loading...</span>
-        <div class="answer-container" v-if="!loadingNewAnswerList">
-          <button
-            type="button"
-            v-for="{id, title} in answers"
-            :key="id"
-            @click="addToCurrentQuestionIndex(e,id)"
-            class="answer-button">{{ title }}
-          </button>
-        </div>
-        <span>Answered: <b>{{ currentQuestionIndex }}/{{ questions.length }}</b></span>
+      <LoadingComponent v-if="loadingNewAnswerList" elementsClass="" elementsText="Loading..." />
+
+      <div class="answer-container" v-if="!loadingNewAnswerList">
+        <button
+          type="button"
+          v-for="{id, title} in answers"
+          :key="id"
+          @click="addToCurrentQuestionIndex(e,id)"
+          class="answer-button">{{ title }}
+        </button>
+      </div>
+      <span>Answered question progress (total {{ questions.length }})</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" :style="{'width': calcProgress + '%'}"></div>
+      </div>
     </div>
   </div>
 
-    <div v-if="quizComplete">
-      <QuizComplete
-        :baseUrlAPI="baseUrlAPI"
-        :userAnswerListIntoString="userAnswerListIntoString"
-        :userChoice="userChoice"
-        @reactivateQuizUp="quizCompleteReset"/>
-    </div>
+  <div v-if="quizComplete">
+    <QuizComplete
+      :baseUrlAPI="baseUrlAPI"
+      :userAnswerListIntoString="userAnswerListIntoString"
+      :userChoice="userChoice"
+      @reactivateQuizUp="quizCompleteReset" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,6 +40,7 @@ import axios from 'axios'
 import {QuestionsAndAnswers} from '@/Types'
 import {UserChoice} from '@/Types.ts'
 import QuizComplete from "@/components/QuizComplete.vue";
+import LoadingComponent from '@/components/LoadingComponent.vue'
 
 export default {
   name: "TheQuiz",
@@ -44,9 +50,15 @@ export default {
   },
 
   components: {
-    QuizComplete
-  },
+    QuizComplete,
+    LoadingComponent
 
+  },
+  computed: {
+    calcProgress() {
+        return ((this.currentQuestionIndex / this.questions.length) * 100).toFixed()
+      }
+  },
   data() {
     return {
       questions: [] as QuestionsAndAnswers[],
@@ -111,18 +123,42 @@ export default {
 }
 </script>
 
-<style scoped>
-  .quiz-container{
-    min-height: 350px;
-  }
-  .quiz-container,
-  .answer-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 30px;
-  }
-  .answer-container{
-    gap: 10px;
-  }
+<style scoped lang="scss">
+$dark: #2c3e50;
+
+.quiz-container,
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.answer-container {
+  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  width: 100%;
+}
+
+.loading-container {
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.progress-bar,
+.progress-bar-container {
+  height: 10px;
+  border-radius: 8px;
+}
+
+.progress-bar-container {
+  width: 100px;
+  background-color: transparent;
+  border: 1px solid $dark;
+}
+
+.progress-bar {
+  background-color: $dark;
+}
 </style>

@@ -58,10 +58,13 @@ body{
   padding-top: 40px;
   display: flex;
   justify-content: center;
+  height: 100vh;
 }
-.home {
-  background-color: $white;
-  width: 500px;
-  padding: 60px 40px;
+
+@media only screen and (min-width: 620px) {
+  #app {
+    align-items: center;
+  }
 }
+
 </style>
