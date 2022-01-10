@@ -1,15 +1,27 @@
 <template>
   <div class="form-container">
-    <h1>Quiz select</h1>
-    <form class="form-elements" @submit.prevent>
-      <input v-model="userName" type="text">
-      <select id="topic" v-model="quizTopic" name="topic">
-        <option v-for="category in apiQuizCategories" :key="category.id" :value="category.title">
-          {{ category.title }}
-        </option>
-      </select>
-      <span v-if="errorMessage">{{ errorMessage }}</span>
-      <button @click="this.userSelectedNameAndTopic">Confirm</button>
+    <h1 class="main-header">Quiz select</h1>
+    <form class="form" @submit.prevent>
+      <div class="form-elements">
+        <label for="select-username">
+          Username
+          <input id="select-username" class="username" v-model="userName" type="text" maxlength="20">
+        </label>
+        <div>
+          <label for="selected">Select a topic
+            <select class="select-category" id="selected" v-model="quizTopic">
+              <option
+                v-for="category in apiQuizCategories"
+                :key="category.id"
+                :value="category.title">
+                {{ category.title }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <span class="form-error" v-if="errorMessage">{{ errorMessage }}</span>
+      <button class="submit-button" @click="this.userSelectedNameAndTopic">Confirm</button>
     </form>
   </div>
 </template>
@@ -23,6 +35,7 @@ export default ({
   props: {
     baseUrlAPI: String,
   },
+  emits: ["emmitUserChoiceUp"],
   mounted() {
     axios.get(this.baseUrlAPI + 'quizzes')
       .then(({data}) => this.apiQuizCategories = data)
@@ -50,6 +63,7 @@ export default ({
       const chosenQuizTopic = this.apiQuizCategories.find((question) => {
         return question.title === this.quizTopic
       }).id
+      console.log('Add')
       this.$emit('emmitUserChoiceUp', {
         selectedUserName: this.userName,
         selectedID: chosenQuizTopic
@@ -59,17 +73,57 @@ export default ({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$red: #d32f2f;
+
 .form-container,
-.form-elements {
+.form-elements,
+.form {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
 }
 
+.form-container {
+}
+
+.form-container, .form {
+  gap: 40px;
+}
+
+.main-header {
+  font-size: 44px;
+}
+
 .form-elements {
   width: max-content;
-  align-items: stretch;
+  gap: 20px;
+  position: relative;
+
+  & .username,
+  & .select-category {
+    padding: 10px;
+    width: 300px;
+  }
+}
+
+.form-error {
+  text-align: left;
+  font-size: 12px;
+  position: absolute;
+  top: 345px;
+  left: calc(50% - 150px);
+  color: $red;
+  font-weight: 500;
+}
+
+.username,
+.select-category {
+  font-size: 18px;
+}
+
+.submit-button {
+  width: 300px;
 }
 </style>

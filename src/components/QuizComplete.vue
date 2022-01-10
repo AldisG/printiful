@@ -1,11 +1,15 @@
 <template>
-  <div class="wrapper">
+  <div class="quiz-complete-container">
     <h2 class="quiz-complete">Quiz completed!</h2>
-    <h4 class="user">Thanks, {{userNameUpperCase}}!</h4>
-    <span v-if="score" class="user-final-score">
-      Your score is {{ score.correct }} / {{ score.total }}!
+    <h4 class="user-congrats">Thanks, {{ userNameUpperCase }}!</h4>
+    <span v-if="!score.total" class="user-final-score">
+      Thinking!
+    </span>
+    <span v-if="score.total" class="user-final-score">
+      Your score is <b>{{ score.correct }} / {{ score.total }}</b>!
     </span>
   </div>
+  <button @click="$emit('reactivateQuizUp', 'emit me')" class="restart-button">New Quiz</button>
 </template>
 
 <script lang="ts">
@@ -21,6 +25,8 @@ export default ({
     userName: String,
     userChoice: {} as UserChoice,
   },
+  emits: ["reactivateQuizUp"],
+
   data() {
     return {
       score: {correct: 0, total: 0} as AnswerResults,
@@ -28,7 +34,6 @@ export default ({
       userNameUpperCase: this.userChoice.selectedUserName[0].toUpperCase() + this.userChoice.selectedUserName.slice(1)
     }
   },
-  methods: {},
   async mounted() {
     await axios
       .get(this.baseUrlAPI + 'submit&quizId=' + this.selectedQuestionID + this.userAnswerListIntoString)
@@ -38,5 +43,23 @@ export default ({
 </script>
 
 <style scoped>
+.quiz-complete-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
+.quiz-complete {
+  font-size: 44px;
+  padding-bottom: 10px;
+}
+
+.user-congrats,
+.user-final-score {
+  font-size: 24px;
+}
+
+.restart-button {
+  margin-top: 40px;
+}
 </style>
