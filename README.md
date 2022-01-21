@@ -1,3 +1,5 @@
+![](https://github.com/AldisG/Printful-md-gif/blob/main/printful-quiz.gif)
+
 # printifulquiz
 ```
 Printiful homework.
